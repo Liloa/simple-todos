@@ -8,7 +8,7 @@ import { Tasks } from '../api/tasks.js';
 import './task.js';
 import './body.html';
 
-emplate.body.onCreated(function bodyOnCreated() {
+Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
 });
 
@@ -35,13 +35,8 @@ Template.body.events({
     const target = event.target;
     const text = target.text.value;
 
-    // Insert a task into the collection
-    Tasks.insert({
-      text,
-      createdAt: new Date(), // current time
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
-    });
+    Meteor.call('tasks.insert', text);
+
 
     // Clear form
     target.text.value = '';
